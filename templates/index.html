@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+<title>SMJ EXPEDICTION</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --sand: #f0e8df;
+    --deep: #1a1512;
+    --gold: #c9a84c;
+    --gold-light: #e2c97e;
+    --warm: #8b6f47;
+    --cream: #faf6f1;
+    --text: #3d3228;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ──── NAV ──── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 48px;
+    background: rgba(26,21,18,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 300; color: var(--gold-light);
+    letter-spacing: 3px; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 400; transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ──── HERO ──── */
+  .hero {
+    position: relative; height: 100vh;
+    background: linear-gradient(135deg, #1a1512 0%, #2c2420 40%, #3d2e25 100%);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139,111,71,0.15) 0%, transparent 60%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { position: relative; z-index: 2; text-align: center; }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px; font-weight: 400;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 300; color: #fff; line-height: 1.05;
+    letter-spacing: -1px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub {
+    margin-top: 24px; color: rgba(255,255,255,0.55);
+    font-size: 0.95rem; font-weight: 300; max-width: 480px; margin-inline: auto; line-height: 1.7;
+  }
+  .hero-cta {
+    margin-top: 44px;
+    display: inline-block; padding: 14px 40px;
+    border: 1px solid var(--gold); color: var(--gold-light);
+    text-decoration: none; font-size: 0.73rem;
+    letter-spacing: 3px; text-transform: uppercase;
+    transition: background .3s, color .3s;
+  }
+  .hero-cta:hover { background: var(--gold); color: #1a1512; }
+
+  .scroll-hint {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .scroll-hint span { color: rgba(255,255,255,0.3); font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; }
+  .scroll-line {
+    width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.3; transform: scaleY(0.6); }
+  }
+
+  /* ──── SECTION TITLES ──── */
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--deep);
+  }
+  .title-rule {
+    width: 48px; height: 2px; background: var(--gold); margin-top: 18px;
+  }
+
+  /* ──── LOCATIONS ──── */
+  .locations { padding: 110px 48px; background: var(--cream); }
+  .locations-inner { max-width: 1140px; margin-inline: auto; }
+  .locations-header { margin-bottom: 70px; }
+  .locations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+  }
+  .location-card {
+    position: relative; overflow: hidden; border-radius: 4px;
+    background: var(--deep); cursor: pointer;
+    aspect-ratio: 3/4; transition: transform .4s ease;
+  }
+  .location-card:hover { transform: translateY(-6px); }
+  .location-card .card-bg {
+    position: absolute; inset: 0;
+    transition: transform .6s ease;
+  }
+  .location-card:hover .card-bg { transform: scale(1.06); }
+
+  .card-bg-1 { background: linear-gradient(145deg, #2e4a3e 0%, #1a3a2a 50%, #0f2318 100%); }
+  .card-bg-2 { background: linear-gradient(145deg, #3a2e1a 0%, #52401e 50%, #6b5320 100%); }
+  .card-bg-3 { background: linear-gradient(145deg, #1e2a4a 0%, #2a3a5e 50%, #1a2540 100%); }
+  .card-bg-4 { background: linear-gradient(145deg, #4a2e2e 0%, #6b3a2a 50%, #523020 100%); }
+  .card-bg-5 { background: linear-gradient(145deg, #2a2e4a 0%, #3e4a6b 50%, #253040 100%); }
+  .card-bg-6 { background: linear-gradient(145deg, #2e3a2e 0%, #3a5240 50%, #2a4030 100%); }
+
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,21,18,0.92) 0%, rgba(26,21,18,0.2) 50%, transparent 100%);
+  }
+  .card-icon {
+    position: absolute; top: 28px; right: 28px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 32px 28px 28px;
+  }
+  .card-tag {
+    display: inline-block; padding: 4px 12px;
+    background: rgba(201,168,76,0.2); color: var(--gold-light);
+    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 2px; margin-bottom: 12px;
+  }
+  .card-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 400; color: #fff; margin-bottom: 6px;
+  }
+  .card-content p {
+    color: rgba(255,255,255,0.5); font-size: 0.82rem; font-weight: 300; line-height: 1.5;
+  }
+  .card-price {
+    margin-top: 14px; color: var(--gold-light);
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600;
+  }
+  .card-price span { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-weight: 300; font-family: 'Inter', sans-serif; }
+
+  /* ──── GALLERY ──── */
+  .gallery { padding: 100px 48px; background: var(--deep); position: relative; overflow: hidden; }
+  .gallery::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .gallery-inner { max-width: 1140px; margin-inline: auto; position: relative; z-index: 1; }
+  .gallery-header { margin-bottom: 56px; }
+  .gallery-header .section-title { color: #fff; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, 180px);
+    gap: 12px;
+  }
+  .gallery-item {
+    border-radius: 4px; overflow: hidden;
+    position: relative; cursor: pointer;
+  }
+  .gallery-item .g-bg {
+    position: absolute; inset: 0;
+    transition: transform .5s ease;
+  }
+  .gallery-item:hover .g-bg { transform: scale(1.08); }
+  .gallery-item .g-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,21,18,0.6) 0%, transparent 60%);
+    opacity: 0; transition: opacity .4s;
+  }
+  .gallery-item:hover .g-overlay { opacity: 1; }
+  .gallery-item .g-label {
+    position: absolute; bottom: 16px; left: 20px; z-index: 2;
+    color: #fff; font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 300; opacity: 0;
+    transition: opacity .4s .1s, transform .4s .1s;
+    transform: translateY(6px);
+  }
+  .gallery-item:hover .g-label { opacity: 1; transform: translateY(0); }
+
+  /* Placement */
+  .g1 { grid-column: 1 / 6; grid-row: 1 / 3; }
+  .g2 { grid-column: 6 / 9; grid-row: 1 / 2; }
+  .g3 { grid-column: 9 / 13; grid-row: 1 / 2; }
+  .g4 { grid-column: 6 / 10; grid-row: 2 / 3; }
+  .g5 { grid-column: 10 / 13; grid-row: 2 / 3; }
+  .g6 { grid-column: 1 / 5; grid-row: 3 / 4; }
+  .g7 { grid-column: 5 / 9; grid-row: 3 / 4; }
+  .g8 { grid-column: 9 / 13; grid-row: 3 / 4; }
+
+  /* Gallery colors – organic landscape palette */
+  .gb1 { background: linear-gradient(135deg, #2d4a3e, #4a7a5e, #3a6040); }
+  .gb2 { background: linear-gradient(135deg, #6b8c5e, #8faa72, #5a7a4a); }
+  .gb3 { background: linear-gradient(135deg, #c4956a, #dbb88a, #b07c4e); }
+  .gb4 { background: linear-gradient(135deg, #4a6080, #6a8aaa, #3a5070); }
+  .gb5 { background: linear-gradient(135deg, #8a6a4a, #b08a6a, #705a3a); }
+  .gb6 { background: linear-gradient(135deg, #5a8a6a, #7aaa8a, #4a7a5a); }
+  .gb7 { background: linear-gradient(135deg, #c49a70, #e0bb90, #a87e55); }
+  .gb8 { background: linear-gradient(135deg, #3a5a7a, #5a7a9a, #2a4a6a); }
+
+  /* Gallery subsections – Locations & Vehicles */
+  .gallery-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 400; color: rgba(255,255,255,0.9);
+    margin: 40px 0 24px 0; letter-spacing: 1px;
+  }
+  .gallery-subtitle:first-of-type { margin-top: 0; }
+
+  .location-grid, .vehicle-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  .vehicle-card {
+    position: relative; overflow: hidden; border-radius: 4px;
+    background: var(--deep); cursor: pointer;
+    aspect-ratio: 4/3; transition: transform .4s ease;
+  }
+  .vehicle-card:hover { transform: translateY(-6px); }
+
+  .location-card img, .vehicle-card img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .6s ease;
+  }
+  .location-card:hover img, .vehicle-card:hover img {
+    transform: scale(1.06);
+  }
+
+  .location-card .card-overlay, .vehicle-card .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,21,18,0.92) 0%, rgba(26,21,18,0.2) 50%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 28px 24px;
+  }
+  .location-card .card-overlay h3, .vehicle-card .card-overlay h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 400; color: #fff; margin-bottom: 6px;
+  }
+  .location-card .card-overlay p, .vehicle-card .card-overlay p {
+    color: rgba(255,255,255,0.55); font-size: 0.82rem; font-weight: 300; line-height: 1.5;
+  }
+
+  /* Bus slideshow modal */
+  .bus-modal {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(26,21,18,0.95); display: none;
+    align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s ease;
+  }
+  .bus-modal.open { display: flex; opacity: 1; }
+  .bus-modal .modal-backdrop {
+    position: absolute; inset: 0; cursor: pointer;
+  }
+  .bus-modal .modal-content {
+    position: relative; max-width: 90vw; max-height: 85vh;
+    width: 800px; z-index: 1;
+  }
+  .bus-modal .modal-close {
+    position: absolute; top: -40px; right: 0;
+    width: 36px; height: 36px; border: none;
+    background: rgba(255,255,255,0.15); color: #fff;
+    border-radius: 50%; cursor: pointer; font-size: 1.2rem;
+    transition: background .3s;
+  }
+  .bus-modal .modal-close:hover {
+    background: var(--gold); color: var(--deep);
+  }
+  .bus-slideshow {
+    position: relative; border-radius: 8px; overflow: hidden;
+    aspect-ratio: 4/3; background: var(--deep);
+  }
+  .bus-slideshow .slide-images { position: relative; width: 100%; height: 100%; min-height: 300px; }
+  .bus-slideshow .slide-images img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: contain; opacity: 0; transition: opacity .4s;
+  }
+  .bus-slideshow .slide-images img.active { opacity: 1; z-index: 1; }
+  .bus-slideshow .slide-prev, .bus-slideshow .slide-next {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border: none;
+    background: rgba(255,255,255,0.2); color: #fff;
+    border-radius: 50%; cursor: pointer; z-index: 2;
+    font-size: 1.2rem; transition: background .3s;
+  }
+  .bus-slideshow .slide-prev:hover, .bus-slideshow .slide-next:hover {
+    background: var(--gold); color: var(--deep);
+  }
+  .bus-slideshow .slide-prev { left: 12px; }
+  .bus-slideshow .slide-next { right: 12px; }
+  .bus-slideshow .slide-dots {
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 2;
+  }
+  .bus-slideshow .slide-dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.4); cursor: pointer;
+    transition: background .3s;
+  }
+  .bus-slideshow .slide-dots span.active { background: var(--gold); }
+
+  /* Subtle noise texture overlay */
+  .gallery-item::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1;
+  }
+
+  /* ──── CONTACT ──── */
+  .contact { padding: 110px 48px; background: var(--sand); }
+  .contact-inner {
+    max-width: 1100px; margin-inline: auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .contact-left .section-title { margin-bottom: 24px; }
+  .contact-left > p {
+    color: var(--warm); font-size: 0.92rem; line-height: 1.8; font-weight: 300; max-width: 420px;
+  }
+  .contact-details { margin-top: 44px; display: flex; flex-direction: column; gap: 24px; }
+  .contact-detail { display: flex; align-items: flex-start; gap: 18px; }
+  .contact-detail .cd-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border: 1px solid rgba(139,111,71,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--gold);
+  }
+  .contact-detail .cd-info h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600; color: var(--deep); margin-bottom: 2px;
+  }
+  .contact-detail .cd-info p { font-size: 0.82rem; color: var(--warm); font-weight: 300; }
+
+  /* Contact Form */
+  .contact-form { background: #fff; padding: 44px; border-radius: 4px; box-shadow: 0 8px 40px rgba(26,21,18,0.06); }
+  .contact-form h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400; color: var(--deep); margin-bottom: 28px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .form-group label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--warm); }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 13px 16px; border: 1px solid #ddd; border-radius: 3px;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--deep);
+    background: var(--cream); transition: border-color .3s; outline: none;
+    appearance: none; -webkit-appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b6f47' fill='none' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+  .btn-submit {
+    width: 100%; padding: 15px;
+    background: var(--deep); color: #fff; border: none;
+    font-family: 'Inter', sans-serif; font-size: 0.73rem;
+    letter-spacing: 3px; text-transform: uppercase;
+    cursor: pointer; border-radius: 3px;
+    transition: background .3s;
+  }
+  .btn-submit:hover { background: var(--warm); }
+
+  /* ──── FOOTER ──── */
+  footer {
+    background: var(--deep); padding: 60px 48px 30px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 30px;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; color: var(--gold-light);
+    letter-spacing: 3px; text-transform: uppercase;
+  }
+  .footer-logo p { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-top: 8px; font-weight: 300; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.78rem; transition: color .3s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-copy { color: rgba(255,255,255,0.2); font-size: 0.72rem; }
+
+  /* ──── RESPONSIVE ──── */
+  @media (max-width: 800px) {
+    nav { padding: 18px 24px; }
+    .nav-links { gap: 18px; }
+    .nav-links a { font-size: 0.7rem; }
+    .hero h1 { font-size: 2.8rem; }
+    .locations, .gallery, .contact { padding: 70px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 160px);
+    }
+    .g1 { grid-column: 1 / 2; grid-row: 1 / 3; }
+    .g2 { grid-column: 2 / 3; grid-row: 1 / 2; }
+    .g3 { grid-column: 2 / 3; grid-row: 2 / 3; }
+    .g4 { grid-column: 1 / 2; grid-row: 3 / 4; }
+    .g5 { grid-column: 2 / 3; grid-row: 3 / 4; }
+    .g6 { grid-column: 1 / 2; grid-row: 4 / 5; }
+    .g7 { grid-column: 2 / 3; grid-row: 4 / 5; }
+    .g8 { display: none; }
+    .location-grid, .vehicle-wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 500px) {
+    nav { padding: 16px 18px; }
+    .nav-logo { font-size: 1.2rem; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
+    .locations-grid { grid-template-columns: 1fr; }
+    .location-grid, .vehicle-wrapper { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; grid-template-rows: repeat(5, 180px); }
+    .g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8 { grid-column: 1 / -1; grid-row: auto; }
+    .g8 { display: block; }
+    .contact-form { padding: 28px 20px; }
+  }
+
+  /* ──── REVEAL ANIMATION ──── */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">smjexpediction</div>
+  <div class="nav-links">
+    
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Explore the world</div>
+    <h1>Travel Beyond<br><em>Imagination</em></h1>
+    <p class="hero-sub">Curated tour packages crafted for the curious traveller. From misty mountains to sun-kissed shores — your perfect escape awaits.</p>
+    <a href="#locations" class="hero-cta">Discover Tours</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-inner">
+
+    <div class="gallery-header">
+      <div class="section-label">Moments Captured</div>
+      <h2 class="section-title">Travel Gallery</h2>
+      <div class="title-rule"></div>
+    </div>
+
+    <!-- LOCATIONS -->
+    <h3 class="gallery-subtitle">Locations</h3>
+
+    <div class="location-grid">
+      <div class="location-card">
+        <img src="{{ url_for('static', filename='images/wyd1.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Waynad Hills</h3>
+          <p>Explore the misty mountains and lush greenery.</p>
+        </div>
+      </div>
+      <div class="location-card">
+        <img src="{{ url_for('static', filename='images/wyd2.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Waynad Valley</h3>
+          <p>Scenic valleys and wildlife adventures await.</p>
+        </div>
+      </div>
+      <div class="location-card">
+        <img src="{{ url_for('static', filename='images/wyd3.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Waynad Trails</h3>
+          <p>Hiking trails through pristine forests.</p>
+        </div>
+      </div>
+      <div class="location-card">
+        <img src="{{ url_for('static', filename='images/palakkayam.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Palakkayam</h3>
+          <p>Tharavadu and cultural heritage sites.</p>
+        </div>
+      </div>
+      <div class="location-card">
+        <img src="{{ url_for('static', filename='images/bekal.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Bekal Fort</h3>
+          <p>Historic fort with stunning coastal views.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VEHICLES -->
+    <h3 class="gallery-subtitle">Vehicles</h3>
+
+    <div class="vehicle-wrapper">
+      <div class="vehicle-card has-slides" id="bus2-card" data-slides="bus2.jpeg,bus1.jpeg,bus21.jpeg,bus22.jpeg">
+        <img src="{{ url_for('static', filename='images/bus2.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Luxury Bus</h3>
+          <p>Comfortable travel for groups. Click to view more images.</p>
+        </div>
+      </div>
+      <div class="vehicle-card has-slides" id="bus3-card" data-slides="bus3.jpeg,bus31.jpeg,bus32.jpeg">
+        <img src="{{ url_for('static', filename='images/bus3.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Tour Bus</h3>
+          <p>Spacious and reliable transport. Click to view more images.</p>
+        </div>
+      </div>
+      <div class="vehicle-card">
+        <img src="{{ url_for('static', filename='images/bus4.jpeg') }}">
+        <div class="card-overlay">
+          <h3>Executive Coach</h3>
+          <p>Premium service for special occasions.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Plan Your<br>Dream Trip</h2>
+      <div class="title-rule"></div>
+      <p style="margin-top:24px;">Have questions or ready to book? Our travel experts are here to tailor the perfect journey just for you.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="cd-icon">📞</div>
+          <div class="cd-info">
+           <h4>Phone</h4>
+
+
+
+<p>
+  +91 9207822616
+  <br>
+
+  <a href="tel:+919207822616">📞 Call</a>
+  &nbsp;&nbsp;
+  <a href="https://wa.me/919207822616">💬 WhatsApp</a>
+
+  <br><br>
+
+  +91 9544477370
+  <br>
+
+  <a href="tel:+919544477370">📞 Call</a>
+  &nbsp;&nbsp;
+  <a href="https://wa.me/919544477370">💬 WhatsApp</a>
+</p>
+
+
+
+
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">✉️</div>
+          <div class="cd-info">
+            
+            <h4>Email</h4>
+            <p>savioshaji2004@gmail.com</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">🕐</div>
+          <div class="cd-info">
+            <h4>Hours</h4>
+            <p>Mon – Fri: 9:00 AM – 9:00 PM IST</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form reveal"
+      action="https://formsubmit.co/savioshaji2004@gmail.com"
+      method="POST">
+
+  <h3>Send Us a Message</h3>
+
+  <div class="form-row">
+    <div class="form-group">
+       <label>First Name</label>
+      <input type="text" name="first_name" placeholder="John" required>
+    </div>
+
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" name="last_name" placeholder="Doe" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email Address</label>
+    <input type="email" name="email" placeholder="john@email.com" required>
+  </div>
+
+  <div class="form-group">
+    <label>Interest</label>
+    <select name="interest" required>
+      <option value="General Inquiry">General Inquiry</option>
+      <option value="Book a Tour">Book a Tour</option>
+      <option value="Custom Package">Custom Package</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Message</label>
+    <textarea name="message" required></textarea>
+  </div>
+
+  <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
+  <input type="hidden" name="_captcha" value="false">
+
+  <button type="submit" class="btn-submit">Send Message</button>
+
+</form>
+
+</section> <!-- End contact section -->
+
+<!-- Bus Slideshow Modal -->
+<div class="bus-modal" id="bus-modal" role="dialog" aria-label="Bus image slideshow">
+  <div class="modal-backdrop" id="modal-close-btn"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close-x" aria-label="Close">×</button>
+    <div class="bus-slideshow">
+      <div class="slide-images" id="slide-images"></div>
+      <button class="slide-prev" id="slide-prev" aria-label="Previous image">‹</button>
+      <button class="slide-next" id="slide-next" aria-label="Next image">›</button>
+      <div class="slide-dots" id="slide-dots"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    smjexpediction
+    <p>© 2026 smjexpediction Tours. All rights reserved.</p>
+  </div>
+
+  <div class="footer-links">
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+    <a href="#">Privacy</a>
+  </div>
+
+  <div class="footer-copy">
+    Crafted with care for adventurers.
+  </div>
+</footer>
+
+
+<!-- REVEAL SCRIPT -->
+<script>
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal')
+  .forEach(el => observer.observe(el));
+
+// Bus slideshow modal (supports bus1, bus3, etc.)
+const busModal = document.getElementById('bus-modal');
+const slideImagesEl = document.getElementById('slide-images');
+const slideDotsEl = document.getElementById('slide-dots');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalCloseX = document.getElementById('modal-close-x');
+const slidePrev = document.getElementById('slide-prev');
+const slideNext = document.getElementById('slide-next');
+const staticBase = "{{ url_for('static', filename='images/') }}";
+let currentSlide = 0;
+let slides = [];
+let dots = [];
+
+function showSlide(n) {
+  if (!slides.length) return;
+  currentSlide = (n + slides.length) % slides.length;
+  slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+  dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+function openSlideshow(filenames) {
+  const names = filenames.split(',').map(s => s.trim());
+  slideImagesEl.innerHTML = names.map((f, i) =>
+    `<img src="${staticBase}${f}" alt="View ${i + 1}" ${i === 0 ? 'class="active"' : ''}>`
+  ).join('');
+  slideDotsEl.innerHTML = names.map((_, i) =>
+    `<span class="${i === 0 ? 'active' : ''}" data-index="${i}"></span>`
+  ).join('');
+  slides = slideImagesEl.querySelectorAll('img');
+  dots = slideDotsEl.querySelectorAll('span');
+  currentSlide = 0;
+  dots.forEach((d, i) => d.onclick = (e) => { e.stopPropagation(); showSlide(i); });
+  busModal.classList.add('open');
+}
+
+document.querySelectorAll('.vehicle-card.has-slides').forEach(card => {
+  card.addEventListener('click', () => openSlideshow(card.dataset.slides || ''));
+});
+modalCloseBtn?.addEventListener('click', () => busModal.classList.remove('open'));
+modalCloseX?.addEventListener('click', () => busModal.classList.remove('open'));
+slidePrev?.addEventListener('click', (e) => { e.stopPropagation(); showSlide(currentSlide - 1); });
+slideNext?.addEventListener('click', (e) => { e.stopPropagation(); showSlide(currentSlide + 1); });
+document.addEventListener('keydown', (e) => {
+  if (!busModal.classList.contains('open')) return;
+  if (e.key === 'Escape') busModal.classList.remove('open');
+  if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+  if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
+});
+
+</script>
+</body>
+</html>
