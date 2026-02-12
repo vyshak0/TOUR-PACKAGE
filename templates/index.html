@@ -644,54 +644,21 @@
         </div>
       </div>
     </div>
-    <form class="contact-form reveal"
-      action="https://formsubmit.co/vyshakhvinod8@gmail.com"
+<form id="contact-form"
+      action="https://formsubmit.co/ajax/vyshakhvinod8@gmail.com"
       method="POST">
 
-  <h3>Send Us a Message</h3>
+  <input type="text" name="first_name" placeholder="First Name" required>
+  <input type="text" name="last_name" placeholder="Last Name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <textarea name="message" required></textarea>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label>First Name</label>
-      <input type="text" name="First Name" placeholder="John" required>
-    </div>
-
-    <div class="form-group">
-      <label>Last Name</label>
-      <input type="text" name="Last Name" placeholder="Doe" required>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label>Email Address</label>
-    <input type="email" name="Email" placeholder="john@email.com" required>
-  </div>
-
-  <div class="form-group">
-    <label>Interest</label>
-    <select name="Interest" required>
-      <option value="General Inquiry">General Inquiry</option>
-      <option value="Book a Tour">Book a Tour</option>
-      <option value="Custom Package">Custom Package</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Message</label>
-    <textarea name="Message" required></textarea>
-  </div>
-
-  <!-- FormSubmit settings -->
-  <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
   <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
 
-  <!-- Optional redirect (change after deploy) -->
-  <input type="hidden" name="_next" value="https://your-vercel-site.vercel.app/">
-
-  <button type="submit" class="btn-submit">Send Message</button>
-
+  <button type="submit">Send Message</button>
 </form>
+
 </section> <!-- End contact section -->
 
 <!-- Bus Slideshow Modal -->
@@ -790,6 +757,29 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
   if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("contact-form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form)
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert("Message sent successfully!");
+      form.reset();
+    })
+    .catch(error => {
+      alert("Something went wrong.");
+    });
+  });
+});
+
+
 
 </script>
 </body>
