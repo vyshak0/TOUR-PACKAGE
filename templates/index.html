@@ -646,10 +646,10 @@
     </div>
 <form action="https://formsubmit.co/vyshakhvinod8@gmail.com" method="POST">
 
-  <input type="text" name="first_name" required>
-  <input type="text" name="last_name" required>
-  <input type="email" name="email" required>
-  <textarea name="message" required></textarea>
+  <input type="text" name="first_name" placeholder="First Name" required>
+  <input type="text" name="last_name" placeholder="Last Name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <textarea name="message" placeholder="Message" required></textarea>
 
   <input type="hidden" name="_captcha" value="false">
   <input type="hidden" name="_subject" value="New Enquiry">
@@ -756,29 +756,6 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
   if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("contact-form");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    fetch(form.action, {
-      method: "POST",
-      body: new FormData(form)
-    })
-    .then(response => response.json())
-    .then(data => {
-      alert("Message sent successfully!");
-      form.reset();
-    })
-    .catch(error => {
-      alert("Something went wrong.");
-    });
-  });
-});
-
-
 
 </script>
 </body>
