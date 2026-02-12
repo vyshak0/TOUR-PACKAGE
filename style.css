@@ -1,0 +1,197 @@
+:root {
+  --deep: #1a1512;
+  --gold: #c9a84c;
+  --gold-light: #e2c97e;
+  --cream: #faf6f1;
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: #333;
+}
+/* ===============================
+   FIXED GALLERY LAYOUT
+=================================*/
+
+.gallery {
+  padding: 120px 48px;
+  background: var(--deep);
+}
+
+.gallery-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-subtitle {
+  margin: 60px 0 30px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  color: var(--gold-light);
+}
+
+/* ===== LOCATION GRID ===== */
+
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.location-card {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #000;
+}
+
+.location-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.location-card:hover img {
+  transform: scale(1.08);
+}
+
+.location-card .card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.location-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.location-card .card-overlay h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.location-card .card-overlay p {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+}
+
+/* ===== VEHICLE GRID ===== */
+
+.vehicle-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.vehicle-card {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #000;
+}
+
+.vehicle-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.vehicle-card:hover img {
+  transform: scale(1.08);
+}
+
+.vehicle-card .card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.vehicle-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.vehicle-card .card-overlay h3 {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 3px;
+}
+
+.vehicle-card .card-overlay p {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.8rem;
+}
+
+/* ===============================
+   FOOTER
+=================================*/
+
+footer {
+  background: var(--deep);
+  color: white;
+  padding: 60px 48px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--gold-light);
+  letter-spacing: 3px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 25px;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--gold-light);
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* ===============================
+   MOBILE
+=================================*/
+
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

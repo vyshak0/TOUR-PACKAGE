@@ -1,0 +1,4 @@
+- [x] Fix image src paths in location and vehicle cards to use "static/images/"
+- [x] Update staticBase in JS to "static/images/"
+- [x] Modify contact form to handle submission locally with localStorage
+- [x] Add functionality to view saved enquiries
