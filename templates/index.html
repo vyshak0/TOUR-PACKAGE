@@ -699,6 +699,7 @@
 <!-- REVEAL SCRIPT -->
 <script>
 
+// Reveal animation
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
@@ -711,7 +712,8 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal')
   .forEach(el => observer.observe(el));
 
-// Bus slideshow modal (supports bus1, bus3, etc.)
+
+// Bus slideshow modal
 const busModal = document.getElementById('bus-modal');
 const slideImagesEl = document.getElementById('slide-images');
 const slideDotsEl = document.getElementById('slide-dots');
@@ -720,6 +722,7 @@ const modalCloseX = document.getElementById('modal-close-x');
 const slidePrev = document.getElementById('slide-prev');
 const slideNext = document.getElementById('slide-next');
 const staticBase = "static/images/";
+
 let currentSlide = 0;
 let slides = [];
 let dots = [];
@@ -734,44 +737,57 @@ function showSlide(n) {
 function openSlideshow(filenames) {
   const names = filenames.split(',').map(s => s.trim());
   slideImagesEl.innerHTML = names.map((f, i) =>
-    `<img src="${staticBase}${f}" alt="View ${i + 1}" ${i === 0 ? 'class="active"' : ''}>`
+    `<img src="${staticBase}${f}" ${i === 0 ? 'class="active"' : ''}>`
   ).join('');
+
   slideDotsEl.innerHTML = names.map((_, i) =>
-    `<span class="${i === 0 ? 'active' : ''}" data-index="${i}"></span>`
+    `<span class="${i === 0 ? 'active' : ''}"></span>`
   ).join('');
+
   slides = slideImagesEl.querySelectorAll('img');
   dots = slideDotsEl.querySelectorAll('span');
   currentSlide = 0;
-  dots.forEach((d, i) => d.onclick = (e) => { e.stopPropagation(); showSlide(i); });
+
+  dots.forEach((d, i) => d.onclick = () => showSlide(i));
+
   busModal.classList.add('open');
 }
 
-document.querySelectorAll('.vehicle-card.has-slides').forEach(card => {
-  card.addEventListener('click', () => openSlideshow(card.dataset.slides || ''));
-});
+document.querySelectorAll('.vehicle-card.has-slides')
+  .forEach(card => {
+    card.addEventListener('click', () =>
+      openSlideshow(card.dataset.slides || '')
+    );
+  });
+
 modalCloseBtn?.addEventListener('click', () => busModal.classList.remove('open'));
 modalCloseX?.addEventListener('click', () => busModal.classList.remove('open'));
-slidePrev?.addEventListener('click', (e) => { e.stopPropagation(); showSlide(currentSlide - 1); });
-slideNext?.addEventListener('click', (e) => { e.stopPropagation(); showSlide(currentSlide + 1); });
+slidePrev?.addEventListener('click', () => showSlide(currentSlide - 1));
+slideNext?.addEventListener('click', () => showSlide(currentSlide + 1));
+
 document.addEventListener('keydown', (e) => {
   if (!busModal.classList.contains('open')) return;
   if (e.key === 'Escape') busModal.classList.remove('open');
   if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
   if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
 });
-<script>
-document.getElementById("contact-form").addEventListener("submit", function(e) {
-  e.preventDefault();
 
-  const firstName = document.getElementById("first_name").value;
-  const lastName = document.getElementById("last_name").value;
-  const email = document.getElementById("email").value;
-  const interest = document.getElementById("interest").value;
-  const message = document.getElementById("message").value;
 
-  const phoneNumber = "919074323965"; // Your WhatsApp number (no +)
+// WhatsApp Form
+document.getElementById("contact-form")
+  .addEventListener("submit", function(e) {
 
-  const whatsappMessage =
+    e.preventDefault();
+
+    const firstName = document.getElementById("first_name").value;
+    const lastName = document.getElementById("last_name").value;
+    const email = document.getElementById("email").value;
+    const interest = document.getElementById("interest").value;
+    const message = document.getElementById("message").value;
+
+    const phoneNumber = "919074323965"; // your WhatsApp number
+
+    const whatsappMessage =
 `New Enquiry from SMJ Expedition:
 
 Name: ${firstName} ${lastName}
@@ -781,14 +797,15 @@ Interest: ${interest}
 Message:
 ${message}`;
 
-  const encodedMessage = encodeURIComponent(whatsappMessage);
+    const encodedMessage = encodeURIComponent(whatsappMessage);
 
-  const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    const whatsappURL =
+      `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
-  window.open(whatsappURL, "_blank");
+    window.open(whatsappURL, "_blank");
 });
-</script>
 
 </script>
+
 </body>
 </html>
