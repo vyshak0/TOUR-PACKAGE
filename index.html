@@ -828,43 +828,6 @@ contactForm.addEventListener('submit', (e) => {
     formMessage.style.display = 'none';
   }, 5000);
 });
-
-// Add a button to view saved enquiries (for admin purposes)
-const viewEnquiriesBtn = document.createElement('button');
-viewEnquiriesBtn.textContent = 'View Saved Enquiries';
-viewEnquiriesBtn.style.cssText = `
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 15px;
-  background: var(--gold);
-  color: var(--deep);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  z-index: 1000;
-`;
-viewEnquiriesBtn.addEventListener('click', () => {
-  const enquiries = JSON.parse(localStorage.getItem('smj_enquiries') || '[]');
-  if (enquiries.length === 0) {
-    alert('No enquiries saved yet.');
-    return;
-  }
-
-  let message = 'Saved Enquiries:\n\n';
-  enquiries.forEach((enq, index) => {
-    message += `${index + 1}. ${enq.first_name} ${enq.last_name} (${enq.email})\n`;
-    message += `Interest: ${enq.interest}\n`;
-    message += `Message: ${enq.message}\n`;
-    message += `Date: ${new Date(enq.timestamp).toLocaleString()}\n\n`;
-  });
-
-  alert(message);
-});
-
-document.body.appendChild(viewEnquiriesBtn);
-
 </script>
 </body>
 
