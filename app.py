@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 import smtplib
 from email.message import EmailMessage
+import os
 
 app = Flask(__name__)
 
-EMAIL_ADDRESS = "savioshaji2004@gmail.com"
-EMAIL_PASSWORD = "YOUR_GMAIL_APP_PASSWORD"
+EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -19,12 +21,15 @@ def index():
         if not all([first_name, last_name, email, interest, message]):
             return redirect(url_for("index"))
 
-        msg = EmailMessage()
-        msg["Subject"] = "New SMJ Expedition Enquiry"
-        msg["From"] = EMAIL_ADDRESS
-        msg["To"] = EMAIL_ADDRESS
+        # Only try sending mail if credentials exist
+        if EMAIL_ADDRESS and EMAIL_PASSWORD:
+            try:
+                msg = EmailMessage()
+                msg["Subject"] = "New SMJ Expedition Enquiry"
+                msg["From"] = EMAIL_ADDRESS
+                msg["To"] = EMAIL_ADDRESS
 
-        msg.set_content(f"""
+                msg.set_content(f"""
 New enquiry received
 
 First Name: {first_name}
@@ -34,16 +39,20 @@ Interest: {interest}
 
 Message:
 {message}
-        """)
+                """)
 
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            server.send_message(msg)
+                with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                    server.send_message(msg)
 
+            except Exception as e:
+                print("Email sending failed:", e)
+
+        # Always redirect even if email fails
         return redirect(url_for("index"))
 
     return render_template("index.html")
 
+
 if __name__ == "__main__":
     app.run()
-
