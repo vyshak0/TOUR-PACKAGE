@@ -645,31 +645,31 @@
       </div>
     </div>
     <form class="contact-form reveal"
-      action="https://formsubmit.co/savioshaji2004@gmail.com"
+      action="https://formsubmit.co/vyshakhvinod8@gmail.com"
       method="POST">
 
   <h3>Send Us a Message</h3>
 
   <div class="form-row">
     <div class="form-group">
-       <label>First Name</label>
-      <input type="text" name="first_name" placeholder="John" required>
+      <label>First Name</label>
+      <input type="text" name="First Name" placeholder="John" required>
     </div>
 
     <div class="form-group">
       <label>Last Name</label>
-      <input type="text" name="last_name" placeholder="Doe" required>
+      <input type="text" name="Last Name" placeholder="Doe" required>
     </div>
   </div>
 
   <div class="form-group">
     <label>Email Address</label>
-    <input type="email" name="email" placeholder="john@email.com" required>
+    <input type="email" name="Email" placeholder="john@email.com" required>
   </div>
 
   <div class="form-group">
     <label>Interest</label>
-    <select name="interest" required>
+    <select name="Interest" required>
       <option value="General Inquiry">General Inquiry</option>
       <option value="Book a Tour">Book a Tour</option>
       <option value="Custom Package">Custom Package</option>
@@ -678,16 +678,20 @@
 
   <div class="form-group">
     <label>Message</label>
-    <textarea name="message" required></textarea>
+    <textarea name="Message" required></textarea>
   </div>
 
+  <!-- FormSubmit settings -->
   <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
   <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+
+  <!-- Optional redirect (change after deploy) -->
+  <input type="hidden" name="_next" value="https://your-vercel-site.vercel.app/">
 
   <button type="submit" class="btn-submit">Send Message</button>
 
 </form>
-
 </section> <!-- End contact section -->
 
 <!-- Bus Slideshow Modal -->
