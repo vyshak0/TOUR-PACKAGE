@@ -644,18 +644,21 @@
         </div>
       </div>
     </div>
-<form action="https://formsubmit.co/vyshakhvinod8@gmail.com" method="POST">
+<form id="contact-form">
+  <input type="text" id="first_name" placeholder="First Name" required>
+  <input type="text" id="last_name" placeholder="Last Name" required>
+  <input type="email" id="email" placeholder="Email" required>
 
-  <input type="text" name="first_name" placeholder="First Name" required>
-  <input type="text" name="last_name" placeholder="Last Name" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <textarea name="message" placeholder="Message" required></textarea>
+  <select id="interest" required>
+    <option value="">Select Interest</option>
+    <option value="General Inquiry">General Inquiry</option>
+    <option value="Book a Tour">Book a Tour</option>
+    <option value="Custom Package">Custom Package</option>
+  </select>
 
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_subject" value="New Enquiry from Website">
+  <textarea id="message" placeholder="Your Message" required></textarea>
 
-  <button type="submit">Send</button>
-
+  <button type="submit">Send via WhatsApp</button>
 </form>
 
 </section> <!-- End contact section -->
@@ -756,6 +759,35 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
   if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
 });
+<script>
+document.getElementById("contact-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const firstName = document.getElementById("first_name").value;
+  const lastName = document.getElementById("last_name").value;
+  const email = document.getElementById("email").value;
+  const interest = document.getElementById("interest").value;
+  const message = document.getElementById("message").value;
+
+  const phoneNumber = "919207822616"; // Your WhatsApp number (no +)
+
+  const whatsappMessage =
+`New Enquiry from SMJ Expedition:
+
+Name: ${firstName} ${lastName}
+Email: ${email}
+Interest: ${interest}
+
+Message:
+${message}`;
+
+  const encodedMessage = encodeURIComponent(whatsappMessage);
+
+  const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+  window.open(whatsappURL, "_blank");
+});
+</script>
 
 </script>
 </body>
