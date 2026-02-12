@@ -520,35 +520,35 @@
 
     <div class="location-grid">
       <div class="location-card">
-        <img src="{{ url_for('static', filename='images/wyd1.jpeg') }}">
+        <img src="static/images/wyd1.jpeg">
         <div class="card-overlay">
           <h3>Waynad Hills</h3>
           <p>Explore the misty mountains and lush greenery.</p>
         </div>
       </div>
       <div class="location-card">
-        <img src="{{ url_for('static', filename='images/wyd2.jpeg') }}">
+        <img src="static/images/wyd2.jpeg">
         <div class="card-overlay">
           <h3>Waynad Valley</h3>
           <p>Scenic valleys and wildlife adventures await.</p>
         </div>
       </div>
       <div class="location-card">
-        <img src="{{ url_for('static', filename='images/wyd3.jpeg') }}">
+        <img src="static/images/wyd3.jpeg">
         <div class="card-overlay">
           <h3>Waynad Trails</h3>
           <p>Hiking trails through pristine forests.</p>
         </div>
       </div>
       <div class="location-card">
-        <img src="{{ url_for('static', filename='images/palakkayam.jpeg') }}">
+        <img src="static/images/palakkayam.jpeg">
         <div class="card-overlay">
           <h3>Palakkayam</h3>
           <p>Tharavadu and cultural heritage sites.</p>
         </div>
       </div>
       <div class="location-card">
-        <img src="{{ url_for('static', filename='images/bekal.jpeg') }}">
+        <img src="static/images/bekal.jpeg">
         <div class="card-overlay">
           <h3>Bekal Fort</h3>
           <p>Historic fort with stunning coastal views.</p>
@@ -561,21 +561,21 @@
 
     <div class="vehicle-wrapper">
       <div class="vehicle-card has-slides" id="bus2-card" data-slides="bus2.jpeg,bus1.jpeg,bus21.jpeg,bus22.jpeg">
-        <img src="{{ url_for('static', filename='images/bus2.jpeg') }}">
+        <img src="static/images/bus2.jpeg">
         <div class="card-overlay">
           <h3>Luxury Bus</h3>
           <p>Comfortable travel for groups. Click to view more images.</p>
         </div>
       </div>
       <div class="vehicle-card has-slides" id="bus3-card" data-slides="bus3.jpeg,bus31.jpeg,bus32.jpeg">
-        <img src="{{ url_for('static', filename='images/bus3.jpeg') }}">
+        <img src="static/images/bus3.jpeg">
         <div class="card-overlay">
           <h3>Tour Bus</h3>
           <p>Spacious and reliable transport. Click to view more images.</p>
         </div>
       </div>
       <div class="vehicle-card">
-        <img src="{{ url_for('static', filename='images/bus4.jpeg') }}">
+        <img src="static/images/bus4.jpeg">
         <div class="card-overlay">
           <h3>Executive Coach</h3>
           <p>Premium service for special occasions.</p>
@@ -645,16 +645,11 @@
       </div>
     </div>
 <form action="https://formsubmit.co/vyshakhvinod8@gmail.com" method="POST">
+  <input type="text" name="name" placeholder="Name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <textarea name="message" placeholder="Message" required></textarea>
 
-  <input type="text" name="first_name" required>
-  <input type="text" name="last_name" required>
-  <input type="email" name="email" required>
-  <textarea name="message" required></textarea>
-
-  <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
   <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="https://smjexpedition.vercel.app/">
-
   <button type="submit">Send</button>
 </form>
 
@@ -717,7 +712,7 @@ const modalCloseBtn = document.getElementById('modal-close-btn');
 const modalCloseX = document.getElementById('modal-close-x');
 const slidePrev = document.getElementById('slide-prev');
 const slideNext = document.getElementById('slide-next');
-const staticBase = "{{ url_for('static', filename='images/') }}";
+const staticBase = "static/images/";
 let currentSlide = 0;
 let slides = [];
 let dots = [];
