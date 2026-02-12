@@ -586,6 +586,45 @@
   </div>
 </section>
 
+<form action="https://formsubmit.co/savioshaji2004@gmail.com" method="POST">
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" name="first_name" required>
+    </div>
+
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" name="last_name" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" name="email" required>
+  </div>
+
+  <div class="form-group">
+    <label>Interest</label>
+    <select name="interest" required>
+      <option value="General Inquiry">General Inquiry</option>
+      <option value="Book a Tour">Book a Tour</option>
+      <option value="Custom Package">Custom Package</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Message</label>
+    <textarea name="message" required></textarea>
+  </div>
+
+  <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
+  <input type="hidden" name="_captcha" value="false">
+
+  <button type="submit" class="btn-submit">Send Message</button>
+
+</form>
 
 
 <!-- CONTACT -->
@@ -773,39 +812,41 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-// WhatsApp Form
-document.getElementById("contact-form")
-  .addEventListener("submit", function(e) {
 
+document.addEventListener("DOMContentLoaded", function () {
+
+  const form = document.getElementById("contact-form");
+  const statusDiv = document.getElementById("form-status");
+
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const firstName = document.getElementById("first_name").value;
-    const lastName = document.getElementById("last_name").value;
-    const email = document.getElementById("email").value;
-    const interest = document.getElementById("interest").value;
-    const message = document.getElementById("message").value;
+    const formData = new FormData(form);
 
-    const phoneNumber = "919074323965"; // your WhatsApp number
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        statusDiv.innerHTML = "<p style='color:green;font-weight:bold;'>Message sent successfully! ✅</p>";
+        form.reset();
+      } else {
+        statusDiv.innerHTML = "<p style='color:red;'>Something went wrong. Try again.</p>";
+      }
+    })
+    .catch(error => {
+      statusDiv.innerHTML = "<p style='color:red;'>Network error. Try again.</p>";
+    });
 
-    const whatsappMessage =
-`New Enquiry from SMJ Expedition:
+  });
 
-Name: ${firstName} ${lastName}
-Email: ${email}
-Interest: ${interest}
-
-Message:
-${message}`;
-
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-
-    const whatsappURL =
-      `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-    window.open(whatsappURL, "_blank");
 });
-
 </script>
+
 
 </body>
 </html>
