@@ -642,7 +642,7 @@
         </div>
       </div>
     </div>
-<form class="contact-form"
+<form class="contact-form" id="contact-form"
       action="https://formsubmit.co/vyshakhvinod8@gmail.com"
       method="POST">
 
@@ -681,8 +681,11 @@
 
   <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
   <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="false">
 
   <button type="submit" class="btn-submit">Send Message</button>
+
+  <div class="form-message" style="margin-top: 20px; display: none; padding: 14px; border-radius: 4px; background: #e8f5e9; color: #2e7d32;"></div>
 
 </form>
 
@@ -737,6 +740,40 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal')
   .forEach(el => observer.observe(el));
+
+
+// Contact form – show thanks inline
+document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const msgEl = form.querySelector('.form-message');
+  const btn = form.querySelector('button[type="submit"]');
+  const origText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  msgEl.style.display = 'none';
+  msgEl.style.background = '';
+  msgEl.textContent = '';
+  try {
+    const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+    if (res.ok) {
+      msgEl.textContent = 'Thank you! We\'ll get back to you soon.';
+      msgEl.style.background = '#e8f5e9';
+      msgEl.style.color = '#2e7d32';
+      msgEl.style.display = 'block';
+      form.reset();
+    } else {
+      throw new Error('Send failed');
+    }
+  } catch (err) {
+    msgEl.textContent = 'Something went wrong. Please try again or email us directly.';
+    msgEl.style.background = '#ffebee';
+    msgEl.style.color = '#c62828';
+    msgEl.style.display = 'block';
+  }
+  btn.disabled = false;
+  btn.textContent = origText;
+});
 
 
 // Bus slideshow modal

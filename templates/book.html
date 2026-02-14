@@ -6,14 +6,45 @@
 <body>
 <h2>Book Package</h2>
 
-<form action="https://formsubmit.co/vyshakhvinod8@gmail.com" method="POST">
+<form id="book-form" action="https://formsubmit.co/vyshakhvinod8@gmail.com" method="POST">
     <input type="hidden" name="_subject" value="New Booking Request">
     <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="/sucess.html">
+    <input type="hidden" name="_next" value="false">
     <input type="text" name="name" placeholder="Your Name" required><br>
     <input type="email" name="email" placeholder="Email" required><br>
     <button type="submit">Confirm Booking</button>
+    <div class="form-message" style="margin-top: 16px; display: none; padding: 14px; border-radius: 4px;"></div>
 </form>
+<script>
+document.getElementById('book-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const msgEl = form.querySelector('.form-message');
+  const btn = form.querySelector('button[type="submit"]');
+  const origText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  msgEl.style.display = 'none';
+  msgEl.textContent = '';
+  try {
+    const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+    if (res.ok) {
+      msgEl.textContent = 'Thank you! We\'ll contact you soon.';
+      msgEl.style.background = '#e8f5e9';
+      msgEl.style.color = '#2e7d32';
+      msgEl.style.display = 'block';
+      form.reset();
+    } else throw new Error();
+  } catch (err) {
+    msgEl.textContent = 'Something went wrong. Please try again.';
+    msgEl.style.background = '#ffebee';
+    msgEl.style.color = '#c62828';
+    msgEl.style.display = 'block';
+  }
+  btn.disabled = false;
+  btn.textContent = origText;
+});
+</script>
 
 </body>
 </html>
