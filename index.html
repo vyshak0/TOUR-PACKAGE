@@ -693,6 +693,7 @@
   <input type="hidden" name="_subject" value="New SMJ Expedition Enquiry">
   <input type="hidden" name="_captcha" value="false">
   <input type="hidden" name="_next" value="false">
+  <input type="hidden" name="_template" value="basic">
 
   <button type="submit" class="btn-submit">Send Message</button>
 
@@ -761,6 +762,8 @@ document.querySelectorAll('.reveal')
 document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
   e.preventDefault();
   const form = e.target;
+  if (form.dataset.submitting === '1') return;
+  form.dataset.submitting = '1';
   const msgEl = document.getElementById('form-message');
   const btn = form.querySelector('button[type="submit"]');
   const origText = btn.textContent;
@@ -788,6 +791,7 @@ document.getElementById('contact-form')?.addEventListener('submit', async functi
   }
   btn.disabled = false;
   btn.textContent = origText;
+  delete form.dataset.submitting;
 });
 
 
